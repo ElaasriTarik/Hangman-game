@@ -78,12 +78,15 @@ function check_if_finished(word) {
 
    });
    const corret_effect = document.querySelector('.correct')
+   const well_done = document.querySelector('.well_done')
+    well_done.style.display = "block"
    if (status === times) {
      console.log('done!');
      corret_effect.classList.add("next_round")
      setTimeout(() => {
        display_letters()
        corret_effect.classList.remove("next_round")
+       well_done.style.display = "none"
      },1500)
    }
 }
@@ -105,10 +108,13 @@ function wrong_letter(){
     head_red.style.backgroundColor = "#e3e3e3"
     head_red.style.borderColor = "#f95959"
     const lost = document.querySelector('.lost')
+    const well_done = document.querySelector('.well_done')
+    well_done.style.display = "block"
     lost.classList.add("try_again")
     setTimeout(() => {
       display_letters()
       lost.classList.remove("try_again")
+      well_done.style.display = "none"
     },1500)
   }
 }
