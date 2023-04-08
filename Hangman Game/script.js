@@ -1,3 +1,5 @@
+let lost = document.querySelector('.lost')
+let correct = document.querySelector('.correct')
 let letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 letters = letters.split('')
 letters.push("Space")
@@ -7,8 +9,12 @@ const months = ["Months", "january", "february", "march", "april", "june", "july
 const cities = ["Cities", "madrid", "marrakech", "berlin", "new york", "amsterdam", "london", "montreal", "baghdad", "bangkok", "cairo", "milan", "roma"]
 const countries = ["Countries", "morocco", "canada", "algeria", "england", "spain", "iraq", "cuba", "qatar", "brazil", "germany", "russia", "norway"]
 let target_part = 2;
+
 display_letters()
 function display_letters() {
+  [lost, correct].forEach((item, i) => {
+    item.style.display = "none"
+  });
   let alphabets_box = document.querySelector('.alphabets')
       let letter = letters.map((item) => {
         return `
@@ -78,15 +84,13 @@ function check_if_finished(word) {
 
    });
    const corret_effect = document.querySelector('.correct')
-   const well_done = document.querySelector('.well_done')
-    well_done.style.display = "block"
    if (status === times) {
      console.log('done!');
-     corret_effect.classList.add("next_round")
+     correct.classList.add("next_round")
+     correct.style.display = "flex";
      setTimeout(() => {
        display_letters()
-       corret_effect.classList.remove("next_round")
-       well_done.style.display = "none"
+       correct.classList.remove("next_round")
      },1500)
    }
 }
@@ -108,13 +112,11 @@ function wrong_letter(){
     head_red.style.backgroundColor = "#e3e3e3"
     head_red.style.borderColor = "#f95959"
     const lost = document.querySelector('.lost')
-    const well_done = document.querySelector('.well_done')
-    well_done.style.display = "block"
     lost.classList.add("try_again")
+    lost.style.display = "flex";
     setTimeout(() => {
       display_letters()
       lost.classList.remove("try_again")
-      well_done.style.display = "none"
     },1500)
   }
 }
