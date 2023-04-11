@@ -2,14 +2,21 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" charset="utf-8" defer></script>
   </head>
   <body>
 
-        <div class="t_word_box">
-           <h2 class="t_word">Animal</h2>
+        <div class="t_word_credits">
+          <div class="t_word_box">
+             <h2 class="t_word">Animal</h2>
+          </div>
+          <div class="credits_box">
+             <h3 class="credits_word">Credits</h3>
+             <h3 class="credits">12</h3>
+          </div>
         </div>
 
         <div class="person_drawing">
@@ -38,12 +45,18 @@
 
         </div>
 
-  
+
      <div class="correct">
        <h1 class="well_done">Well done!</h1>
      </div>
      <div class="lost">
        <h1 class="well_done">Try again.</h1>
+     </div>
+
+     <div class="add_options">
+        <button type="button" name="button" class="opts_btn erase_btn">Erase 1 letter</button>
+        <button type="button" name="button" class="opts_btn show_btn">Show new letter</button>
+        <button type="button" name="button" class="opts_btn skip_btn">Skip</button>
      </div>
   </body>
 </html>
