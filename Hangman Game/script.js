@@ -4,6 +4,8 @@ let exposed_letters = []
 let random_letters = []
 let score = 0;
 let highest_score = 0;
+let this_subject;
+let t_word = document.querySelector('.t_word')
 let lost = document.querySelector('.lost')
 let correct = document.querySelector('.correct')
 const credits_html = document.querySelector('.credits')
@@ -11,6 +13,7 @@ const erase_btn = document.querySelector('.erase_btn')
 const show_btn = document.querySelector('.show_btn')
 const skip_btn = document.querySelector('.skip_btn')
 const score_html = document.querySelector('.score')
+const pick_cat_box = document.querySelector('.pick_cat_box')
 const highestScore_html = document.querySelector('.highestScore')
 
 const for_h_score = localStorage.getItem("highest_score")
@@ -23,14 +26,15 @@ credits_html.textContent = credits;
 let letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 letters = letters.split('')
 //letters.push("Space")
-const companies = ["Companies", "google", "facebook", "fedex", "amazon", "twitter", "ebay", "microsoft", "dell", "xiaomi"]
-const cars = ["cars", "bmw", "renault", "nissan", "dacia", "ferrari", "mercedes", "ford", "fiat"]
-const animals = ["Animanls", "dog", "cat", "cow", "rabbit", "turtle", "tortoise", "porcupine", "crow", "pigeon"];
+const companies = ["Companies", "google", "facebook", "fedex", "amazon", "twitter", "ebay", "microsoft", "dell", "xiaomi", "walmart", "Apple", "tesla", "Meta", "nike", "addidas"]
+const cars = ["cars", "bmw", "renault", "nissan", "dacia", "ferrari", "mercedes", "ford", "fiat", "volvo", "volkswagen", "audi", "kia", "peugeot"]
+const animals = ["Animanls", "dog", "cat", "cow", "rabbit", "turtle", "tortoise", "porcupine", "crow", "pigeon", "Donkey", "Tiger", "Bear", "Frog", "Eagle", "Goat", "Goose", "Lion", "Leopard", "pigeon"];
 const insects = ["Insects", "scorpion", "maggot", "locust", "fly", "bee", "ant", "bug", "worm"]
 const months = ["Months", "january", "february", "march", "april", "june", "july", "august", "september", "october", "november", "december"];
 const cities = ["Cities", "madrid", "marrakech", "berlin", "amsterdam", "london", "montreal", "baghdad", "bangkok", "cairo", "milan", "roma", "kiyv"]
-const countries = ["Countries", "morocco", "canada", "algeria", "england", "spain", "iraq", "cuba", "qatar", "brazil", "germany", "russia", "norway"]
-const human_organs = ["Human Organs", "hand", "face", "leg", "toe", "finger", "nose", "mouth", "forehead", "hair", "eyes", "neck", "skin"]
+const countries = ["Countries", "morocco", "canada", "algeria", "england", "spain", "iraq", "cuba", "qatar", "brazil", "germany", "russia", "norway", "China", "korea", "india", "ukrain", "tanzania", "conso", "sudan", "egypt", "portugal", "Croatia", "Italy", "Iceland", "Argentina"]
+const human_organs = ["Human Body", "hand", "face", "leg", "toe", "finger", "nose", "mouth", "forehead", "hair", "eyes", "neck", "skin", "heart", "lungs", "eyebrow", "skin", "eyelashes", "pupils", "brain", "chin"]
+let subjects = [animals, insects, months, cities, countries, human_organs, cars, companies]
 let target_part = 2;
 
 function add_to_localStorage() {
@@ -46,16 +50,16 @@ function add_to_localStorage() {
     localStorage.setItem("highest_score", highest_score)
     const h_score = localStorage.getItem("highest_score")
     setTimeout(() => {
-     // highestScore_html.textContent = h_score;
-       // highestScore_html.style.animationName = "none"
+      //highestScore_html.textContent = h_score;
+      //highestScore_html.style.animationName = "none"
     },700)
-    // highestScore_html.style.animationName = "up_down"
+    //highestScore_html.style.animationName = "up_down"
     console.log(h_score)
   }
 }
 
 display_letters()
-function display_letters() {
+function display_letters(custom_cat) {
   random_letters = [];
   [lost, correct].forEach((item, i) => {
     item.style.display = "none"
@@ -67,15 +71,13 @@ function display_letters() {
         `
       }).join('')
       alphabets_box.innerHTML = letter;
-      start_game()
+      start_game(custom_cat)
 }
-function start_game() {
+function start_game(custom_cat) {
   target_part = 2;
   return_to_basic()
 
-  let t_word = document.querySelector('.t_word')
-   let subjects = [animals, insects, months, cities, countries, human_organs, cars, companies]
-   let random_subject = subjects[Math.floor(Math.random()*subjects.length)]
+   let random_subject = custom_cat!==undefined? custom_cat:subjects[Math.floor(Math.random()*subjects.length)]
    let copy_random_subject = [...random_subject]
    let chosen_subject = [...copy_random_subject.splice(1)]
    let random_word  = chosen_subject[Math.floor(Math.random()*chosen_subject.length)].toUpperCase()
@@ -177,7 +179,7 @@ function check_if_finished(word) {
      setTimeout(() => {
        credits+= 2;
        credits_html.textContent = credits;
-       display_letters()
+       display_letters(this_subject)
        //correct.classList.remove("next_round")
      },1500)
    }
@@ -211,7 +213,7 @@ function wrong_letter(this_wrong_item){
     setTimeout(() => {
       credits--;
       credits_html.textContent = credits;
-      display_letters()
+      display_letters(this_subject)
       //lost.classList.remove("try_again")
     },1500)
   }
@@ -252,5 +254,32 @@ function erase_one_letter() {
 skip_btn.addEventListener('click', () => {
   credits -= 2;
   credits_html.textContent = credits
-  display_letters()
+  display_letters(this_subject)
 })
+
+pick_cat_box.addEventListener('click', () => {
+  const cat_html = subjects.map((item, i) => {
+    return `
+      <h3 class="cat ${item[0]} cat${i}">${item[0]}
+      </h3>
+    `
+  }).join('')
+  const dialog_html = document.querySelector('.categories')
+  dialog_html.style.display = "flex"
+  dialog_html.innerHTML = cat_html + `<h3 class="cat ranom-cat cat_random">Random</h3>`;
+  get_all_html_cats(dialog_html)
+})
+
+function get_all_html_cats(dialog_html) {
+  const all_html_cats = document.querySelectorAll('.cat')
+  all_html_cats.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      t_word.textContent = item.textContent;
+      console.log(subjects[item.classList[2].slice(3)]);
+      this_subject = subjects[item.classList[2].slice(3)]
+      display_letters(this_subject !== "_random"?this_subject:undefined)
+      dialog_html.style.display = "none"
+    })
+  });
+
+}
