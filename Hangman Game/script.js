@@ -46,8 +46,8 @@ function add_to_localStorage() {
     localStorage.setItem("highest_score", highest_score)
     const h_score = localStorage.getItem("highest_score")
     setTimeout(() => {
-      highestScore_html.textContent = h_score;
-      highestScore_html.style.animationName = "none"
+     // highestScore_html.textContent = h_score;
+        highestScore_html.style.animationName = "none"
     },700)
     highestScore_html.style.animationName = "up_down"
     console.log(h_score)
