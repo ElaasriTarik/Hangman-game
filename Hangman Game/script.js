@@ -15,6 +15,7 @@ const highestScore_html = document.querySelector('.highestScore')
 
 const for_h_score = localStorage.getItem("highest_score")
 score_html.textContent = score;
+highest_score = parseInt(for_h_score);
 highestScore_html.textContent = for_h_score !== undefined ? for_h_score:highest_score;
 
 let credits = 20;
@@ -34,16 +35,24 @@ let target_part = 2;
 
 function add_to_localStorage() {
   score += 10;
-  score_html.textContent = score;
+  setTimeout(() => {
+    score_html.textContent = score;
+    score_html.style.animationName = "none"
+  },700)
+  score_html.style.animationName = "up_down"
   if (score > highest_score) {
-    //highest_score = score;
-    localStorage.setItem("highest_score", score)
+    console.log(score, highest_score);
+    highest_score = score;
+    localStorage.setItem("highest_score", highest_score)
     const h_score = localStorage.getItem("highest_score")
-    highestScore_html.textContent = h_score;
+    setTimeout(() => {
+      highestScore_html.textContent = h_score;
+      highestScore_html.style.animationName = "none"
+    },700)
+    highestScore_html.style.animationName = "up_down"
     console.log(h_score)
   }
 }
-
 
 display_letters()
 function display_letters() {
@@ -162,18 +171,20 @@ function check_if_finished(word) {
    const corret_effect = document.querySelector('.correct')
    if (status === times) {
      console.log('done!');
-     correct.classList.add("next_round")
-     correct.style.display = "flex";
+     //correct.classList.add("next_round")
+     //correct.style.display = "flex";
      add_to_localStorage()
      setTimeout(() => {
        credits+= 2;
        credits_html.textContent = credits;
        display_letters()
-       correct.classList.remove("next_round")
+       //correct.classList.remove("next_round")
      },1500)
    }
 }
 function wrong_letter(this_wrong_item){
+  credits--;
+  credits_html.textContent = credits;
   this_wrong_item.style.borderColor = "grey"
   this_wrong_item.classList.add("deleted")
   this_wrong_item.style.cursor = "none"
@@ -181,7 +192,6 @@ function wrong_letter(this_wrong_item){
   const last_part = document.querySelector('.part11')
   target_part++;
   const this_part = document.querySelector(`.part${target_part}`)
-  console.log(target_part);
   if (this_part == null) {
     return null
   }
@@ -196,13 +206,13 @@ function wrong_letter(this_wrong_item){
     head_red.style.backgroundColor = "#e3e3e3"
     head_red.style.borderColor = "#f95959"
     const lost = document.querySelector('.lost')
-    lost.classList.add("try_again")
-    lost.style.display = "flex";
+    //lost.classList.add("try_again")
+    //lost.style.display = "flex";
     setTimeout(() => {
       credits--;
       credits_html.textContent = credits;
       display_letters()
-      lost.classList.remove("try_again")
+      //lost.classList.remove("try_again")
     },1500)
   }
 }
