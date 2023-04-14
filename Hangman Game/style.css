@@ -383,8 +383,12 @@ body {
   flex-direction: column;
   align-items: center;
   font-size: 13px;
+  height: 3rem;
+  bac kground-color: red;
+  position: relative;
 }
 .score_label, .highestScore_label {
+  top: 0;
   min-width: 100px;
   padding: 0 10px;
   text-align: center;
@@ -392,6 +396,8 @@ body {
   border-bottom: 2px solid;
   border-left: 2px solid;
   border-right: 2px solid;
+  background-color: #e3e3e3;
+  z-index: 1;
 }
 .score, .highestScore {
   max-width: 50px;
@@ -402,5 +408,22 @@ body {
   width: 100%;
   text-align: center;
   font-weight: 600;
-  background-color: #455d7a
+  background-color: #455d7a;
+  ani mation-name: up_down;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+  z-index: -100;
+}
+@keyframes up_down {
+   0% {
+     margin-top: 0;
+   }
+   50% {
+     margin-top: -1.1rem;
+   }
+   100% {
+     margin-top: 0;
+   }
+
 }
