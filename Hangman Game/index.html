@@ -6,12 +6,27 @@
     <title>Hangman</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" charset="utf-8" defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4436267121144959"
-     crossorigin="anonymous"></script>
   </head>
   <body>
+    <div class="score_highestScore">
+      <div class="score_box">
+        <h3 class="score_label">Score</h3>
+        <h3 class="score">10</h3>
+      </div>
+
+      <div class="score_box">
+        <h3 class="highestScore_label">Highest Score</h3>
+        <h3 class="highestScore">100</h3>
+      </div>
+    </div>
 
         <div class="t_word_credits">
+          <div class="pick_cat_box">
+            <h3 class="cat_label">Category</h3>
+            <div class="cat_img_box">
+              <img src="icons/icons8-choose-100.png" alt="" class="cat_img">
+            </div>
+          </div>
           <div class="t_word_box">
              <h2 class="t_word">Animal</h2>
           </div>
@@ -21,17 +36,6 @@
           </div>
         </div>
 
-        <div class="score_highestScore">
-           <div class="score_box">
-             <h3 class="score_label">Score</h3>
-             <h3 class="score">10</h3>
-           </div>
-
-           <div class="score_box">
-             <h3 class="highestScore_label">Highest Score</h3>
-             <h3 class="highestScore">100</h3>
-           </div>
-        </div>
 
         <div class="person_drawing">
            <span class="part part1"></span>
@@ -72,5 +76,9 @@
         <button type="button" name="button" class="opts_btn show_btn">Show new letter</button>
         <button type="button" name="button" class="opts_btn skip_btn">Skip</button>
      </div>
+
+     <dialog class="categories">
+       <h3 class="cat">countries</h3>
+     </dialog>
   </body>
 </html>
