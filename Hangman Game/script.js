@@ -1,27 +1,53 @@
 let rand;
 let this_word;
 let exposed_letters = []
+let random_letters = []
+let score = 0;
+let highest_score = 0;
 let lost = document.querySelector('.lost')
 let correct = document.querySelector('.correct')
 const credits_html = document.querySelector('.credits')
 const erase_btn = document.querySelector('.erase_btn')
 const show_btn = document.querySelector('.show_btn')
 const skip_btn = document.querySelector('.skip_btn')
+const score_html = document.querySelector('.score')
+const highestScore_html = document.querySelector('.highestScore')
 
-let credits = 6;
+const for_h_score = localStorage.getItem("highest_score")
+score_html.textContent = score;
+highestScore_html.textContent = for_h_score !== undefined ? for_h_score:highest_score;
+
+let credits = 20;
 credits_html.textContent = credits;
 let letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 letters = letters.split('')
 //letters.push("Space")
+const companies = ["Companies", "google", "facebook", "fedex", "amazon", "twitter", "ebay", "microsoft", "dell", "xiaomi"]
+const cars = ["cars", "bmw", "renault", "nissan", "dacia", "ferrari", "mercedes", "ford", "fiat"]
 const animals = ["Animanls", "dog", "cat", "cow", "rabbit", "turtle", "tortoise", "porcupine", "crow", "pigeon"];
-const insects = ["Insects", "scorpion", "maggot", "locust", "fly", "bee", "ant", "bug"]
+const insects = ["Insects", "scorpion", "maggot", "locust", "fly", "bee", "ant", "bug", "worm"]
 const months = ["Months", "january", "february", "march", "april", "june", "july", "august", "september", "october", "november", "december"];
-const cities = ["Cities", "madrid", "marrakech", "berlin", "amsterdam", "london", "montreal", "baghdad", "bangkok", "cairo", "milan", "roma"]
+const cities = ["Cities", "madrid", "marrakech", "berlin", "amsterdam", "london", "montreal", "baghdad", "bangkok", "cairo", "milan", "roma", "kiyv"]
 const countries = ["Countries", "morocco", "canada", "algeria", "england", "spain", "iraq", "cuba", "qatar", "brazil", "germany", "russia", "norway"]
+const human_organs = ["Human Organs", "hand", "face", "leg", "toe", "finger", "nose", "mouth", "forehead", "hair", "eyes", "neck", "skin"]
 let target_part = 2;
+
+function add_to_localStorage() {
+  score += 10;
+  score_html.textContent = score;
+  if (score > highest_score) {
+    //highest_score = score;
+    localStorage.setItem("highest_score", score)
+    const h_score = localStorage.getItem("highest_score")
+    highestScore_html.textContent = h_score;
+    console.log(h_score)
+  }
+}
+
 
 display_letters()
 function display_letters() {
+  random_letters = [];
   [lost, correct].forEach((item, i) => {
     item.style.display = "none"
   });
@@ -39,7 +65,7 @@ function start_game() {
   return_to_basic()
 
   let t_word = document.querySelector('.t_word')
-   let subjects = [animals, insects, months, cities, countries]
+   let subjects = [animals, insects, months, cities, countries, human_organs, cars, companies]
    let random_subject = subjects[Math.floor(Math.random()*subjects.length)]
    let copy_random_subject = [...random_subject]
    let chosen_subject = [...copy_random_subject.splice(1)]
@@ -62,9 +88,11 @@ function get_random_letter(word) {
     this_word = word !== undefined? word:this_word;
     rand = this_word[Math.floor(Math.random()*this_word.length)]
     console.log(rand);
-    while (exposed_letters.indexOf(rand) >= 0) {
+    while (random_letters.indexOf(rand) >= 0) {
       rand = this_word[Math.floor(Math.random()*this_word.length)];
     }
+    random_letters.push(rand)
+    console.log(random_letters);
     const all_alphas = document.querySelectorAll('.btn')
     for (var i = 0; i < all_alphas.length; i++) {
       if (all_alphas[i].textContent === rand) {
@@ -79,12 +107,25 @@ function get_random_letter(word) {
       }
   }
   let word_box = document.querySelector('.word_box')
-  const htmlString = this_word.split('').map((item) => {
-    return `
-       <div class="letter let${item}">${item === rand? item:''}</div>
-    `
-  }).join('')
+  let htmlString;
+  for (var i = 0; i < random_letters.length; i++) {
+      htmlString = this_word.split('').map((item) => {
+      return `
+         <div class="letter let${item}"></div>
+      `
+    }).join('')
+    }
   word_box.innerHTML = htmlString
+  // ADD NEW BONUS LETTER FROM random_letters ARRAY
+  const to_be_filled_letters = document.querySelectorAll('.letter')
+  for (var i = 0; i < to_be_filled_letters.length; i++) {
+    for (var x = 0; x < random_letters.length; x++) {
+      if (to_be_filled_letters[i].classList[1].slice(3) === random_letters[x]) {
+        to_be_filled_letters[i].textContent = random_letters[x]
+      }
+    }
+  }
+  check_if_finished(this_word)
 } else {
   alert("you don't have enough credits!")
 }
@@ -123,6 +164,7 @@ function check_if_finished(word) {
      console.log('done!');
      correct.classList.add("next_round")
      correct.style.display = "flex";
+     add_to_localStorage()
      setTimeout(() => {
        credits+= 2;
        credits_html.textContent = credits;
@@ -198,5 +240,7 @@ function erase_one_letter() {
   }
 }
 skip_btn.addEventListener('click', () => {
+  credits -= 2;
+  credits_html.textContent = credits
   display_letters()
 })
