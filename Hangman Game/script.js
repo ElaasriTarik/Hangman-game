@@ -23,7 +23,7 @@ highestScore_html.textContent = for_h_score !== undefined ? for_h_score:highest_
 
 let credits = 20;
 credits_html.textContent = credits;
-let letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let letters ="AZERTYUIOPQSDFGHJKLMWXCVBN";
 letters = letters.split('')
 //letters.push("Space")
 const companies = ["Companies", "google", "facebook", "fedex", "amazon", "twitter", "ebay", "microsoft", "dell", "xiaomi", "walmart", "Apple", "tesla", "Meta", "nike", "addidas"]
@@ -41,8 +41,10 @@ function add_to_localStorage() {
   score += 10;
   setTimeout(() => {
     score_html.textContent = score;
-    score_html.style.animationName = "none"
-  },700)
+    setTimeout(() => {
+      score_html.style.animationName = "none"
+    },350)
+  },350)
   score_html.style.animationName = "up_down"
   if (score > highest_score) {
     console.log(score, highest_score);
