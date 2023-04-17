@@ -231,7 +231,7 @@ body {
 }
 .alphabets {
   margin-top: -2rem;
-  max-width: 17rem;
+  max-width: 21rem;
   min-width: 15rem;
   min-height: 7rem;
   display: flex;
@@ -240,12 +240,14 @@ body {
   gap: 5px;
   justify-content: center;
   padding: 1.3rem 5px;
-
 }
 .btn {
   text-align: center;
-  padding-bottom: 20px;
-  min-width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1px;
+  min-width: 27px;
   padding: 0 3px;
   height: 25px;
   border-bottom: 3px solid #455d7a;
@@ -484,4 +486,33 @@ body {
   color: #455d7a;
   background-color: #e3e3e3;
   border-left: 2px solid #233142;
+}
+.correct_prompt_box {
+  position: absolute;
+  max-width: 70%;
+  padding: 1rem 1.5rem;
+  height: 3rem;
+  background-color: #455d7a;
+  color: #e3e3e3;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 3px;
+  bottom: -20%;
+  animation-name: corr ect_prompt;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(.16,.39,.42,.45);
+}
+@keyframes correct_prompt {
+  25% {
+    top: 120%;
+  }
+  50% {
+    top: 50%;
+  }
+  100% {
+    top: -20%;
+  }
 }
